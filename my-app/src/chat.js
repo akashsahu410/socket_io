@@ -18,6 +18,7 @@ class Chat extends React.Component {
     console.log("inside the groupchat")
     this.setState({one_one:false,reciverName:"",receiverSocketId:""})
     console.log("state after click on group",this.state)
+    alert("Group chat connected")
   }
   //one to one chat
   singleChat=(e)=>{
@@ -32,8 +33,7 @@ class Chat extends React.Component {
   }
   //to send messages in group
   sendMessage=()=>{
-    let doc=document.getElementById("chat-window")
-    doc.scrollTop = doc.scrollHeight
+    $("#chat-window").animate({ scrollTop: 20000000 }, "slow");
     socket.emit("chat",{
       username:this.state.username,
       message:this.state.message
@@ -42,8 +42,7 @@ class Chat extends React.Component {
   }
   //to send one to one msg
   sendOneMessage=()=>{
-    let doc=document.getElementById("mario-chat")
-    doc.scrollTop = doc.scrollHeight
+    $("#chat-window").animate({ scrollTop: 20000000 }, "slow");
     socket.emit("one_chat",{
       sender:this.state.username,
       message:this.state.message,
@@ -182,9 +181,8 @@ class Chat extends React.Component {
             <div id="feedback" > </div>     
           </div>
       </div>
-    
       <input id="handle" type="text" value={this.state.username} name="username"/>
-      <input id="message" type="text" value={this.state.message} placeholder="Message" name="message" onChange={this.handleChange} onKeyPress={this.state.one_one ? this.sendOneTyping :this.sendTyping} />
+      <input id="message" autoFocus type="text" value={this.state.message} placeholder="Message" name="message" onChange={this.handleChange} onKeyPress={this.state.one_one ? this.sendOneTyping :this.sendTyping} />
       <button id="send" onClick={this.state.one_one ? this.sendOneMessage : this.sendMessage}>Send</button>
   </div>
       
